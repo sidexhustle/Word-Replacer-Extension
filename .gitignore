@@ -1,0 +1,9 @@
+node_modules/
+test/e2e/.build/
+test/e2e/.profile*/
+test-results/
+playwright-report/
+*.log
+*.pem
+.DS_Store
+Thumbs.db

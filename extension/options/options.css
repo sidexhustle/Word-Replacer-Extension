@@ -1,0 +1,320 @@
+/* options.css — Styles for the options page (light/dark aware). */
+:root {
+  color-scheme: light dark;
+  --fg: #1f2328;
+  --muted: #6b7280;
+  --bg: #f6f7f9;
+  --card: #ffffff;
+  --line: #e5e7eb;
+  --accent: #2563eb;
+  --warn: #b45309;
+  --error: #dc2626;
+  --banner: #fff7e6;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #e5e7eb;
+    --muted: #9ca3af;
+    --bg: #17181b;
+    --card: #1f2125;
+    --line: #34373d;
+    --accent: #60a5fa;
+    --warn: #fbbf24;
+    --error: #f87171;
+    --banner: #3a2f16;
+  }
+}
+* {
+  box-sizing: border-box;
+}
+[hidden] {
+  display: none !important;
+}
+body {
+  margin: 0 auto;
+  padding: 20px 24px 60px;
+  max-width: 900px;
+  font: 14px/1.45 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: var(--fg);
+  background: var(--bg);
+}
+.top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.top h1 {
+  margin: 0;
+  font-size: 22px;
+}
+.global {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 12px;
+}
+.status {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 13px;
+}
+.status.error {
+  color: var(--error);
+}
+section {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+}
+h2 {
+  font-size: 16px;
+  margin: 0 0 8px;
+}
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-head h2 {
+  margin: 0;
+  flex: 1;
+}
+.hint {
+  color: var(--muted);
+  font-size: 12.5px;
+  margin: 8px 0;
+}
+.empty {
+  color: var(--muted);
+  text-align: center;
+  padding: 12px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th {
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--muted);
+  padding: 4px 6px;
+  border-bottom: 1px solid var(--line);
+}
+td {
+  padding: 4px 6px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+.col-on,
+.col-del {
+  width: 36px;
+  text-align: center;
+}
+.col-match {
+  width: 175px;
+}
+tr.invalid input.r-from {
+  border-color: var(--error);
+}
+tr.duplicate input.r-from {
+  border-color: var(--warn);
+}
+tr.disabled-rule input[type='text'] {
+  opacity: 0.55;
+}
+input[type='text'],
+input[type='search'],
+select {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--fg);
+  font: inherit;
+}
+input[type='search'] {
+  width: 200px;
+}
+input:focus,
+select:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+}
+select option {
+  background: var(--card);
+}
+button,
+.file-btn span {
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--fg);
+  font: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+}
+button:hover,
+.file-btn:hover span {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+button.primary:hover {
+  color: #fff;
+  filter: brightness(1.1);
+}
+button.link {
+  border: none;
+  text-decoration: underline;
+}
+.r-delete {
+  padding: 2px 8px;
+  border: none;
+  color: var(--muted);
+}
+.r-delete:hover {
+  color: var(--error);
+}
+.file-btn input {
+  display: none;
+}
+.inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.inline input[type='text'] {
+  flex: 1;
+  min-width: 220px;
+}
+.inline select {
+  width: auto;
+}
+.checks {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 6px 16px;
+}
+.sites {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+}
+.sites li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--line);
+}
+.banner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--banner);
+  border: 1px solid var(--warn);
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+}
+.compare {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+.compare summary {
+  cursor: pointer;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.compare .inline input[type='text'] {
+  flex: 0 1 200px;
+  min-width: 120px;
+}
+#cmpText {
+  margin-top: 6px;
+}
+.compare-table {
+  margin-top: 6px;
+}
+.compare-table th {
+  width: 150px;
+  border: none;
+  font-size: 13px;
+}
+.compare-table td {
+  border: none;
+}
+.compare-table mark {
+  background: rgba(37, 99, 235, 0.18);
+  color: inherit;
+  border-radius: 3px;
+  padding: 0 2px;
+}
+.banner.error {
+  border-color: var(--error);
+  color: var(--error);
+}
+.banner .actions {
+  display: flex;
+  gap: 6px;
+}
+code {
+  font-size: 12px;
+  padding: 1px 4px;
+  border-radius: 4px;
+  background: rgba(127, 127, 127, 0.15);
+}
+.switch {
+  appearance: none;
+  width: 34px;
+  height: 20px;
+  border-radius: 10px;
+  background: #9ca3af;
+  position: relative;
+  cursor: pointer;
+  margin: 0;
+}
+.switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+}
+.switch:checked {
+  background: var(--accent);
+}
+.switch:checked::after {
+  transform: translateX(14px);
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+/* Animate switches only after the first render, so they don't slide from off to on on open. */
+body.ready .switch {
+  transition: background 0.15s;
+}
+body.ready .switch::after {
+  transition: transform 0.15s;
+}

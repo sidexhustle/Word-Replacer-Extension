@@ -1,0 +1,48 @@
+<!doctype html>
+<!-- static.html — E2E fixture: visible text, title, display attributes and everything that must stay untouched. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Apple prep – Banana</title>
+    <style>
+      .apple-card { color: rgb(255, 0, 0); }
+    </style>
+    <script>
+      window.__inlineScriptText = 'apple inside a script';
+    </script>
+    <script type="application/json" id="json">{"appleId": 1, "text": "apple"}</script>
+  </head>
+  <body>
+    <h1 id="h1">Apple tips</h1>
+    <p id="p1">My apple is about Bananas. APPLES and applesauce. pineapple too.</p>
+    <p id="p2" class="apple-card">styled</p>
+    <a id="link" href="#" title="Open apple notes">link</a>
+    <form id="form">
+      <input id="ph" name="q" placeholder="Search apples" />
+      <input id="val" name="v" value="apple typed by user" />
+      <input id="btn" type="submit" value="Schedule apple" />
+      <input id="btn2" type="submit" name="action" value="Save apple" />
+      <textarea id="ta" name="t">apple in textarea</textarea>
+      <select id="sel" name="s">
+        <option id="opt1">Apple</option>
+        <option id="opt2" value="x">Apple two</option>
+        <optgroup id="og" label="Apple group"><option>Other</option></optgroup>
+      </select>
+    </form>
+    <div id="ce" contenteditable="true">apple in editor <span id="island" contenteditable="false">apple island</span></div>
+    <div id="cefalse" contenteditable="false">apple not editable</div>
+    <img id="img" src="/missing.png" alt="apple photo" />
+    <pre id="pre">code apple</pre>
+    <svg width="200" height="30"><title id="svgtitle">apple tooltip</title><text id="svgt" x="0" y="20">apple svg</text></svg>
+    <p id="split">Ap<b>ple</b> split stays</p>
+    <p id="vi">Uống cà phê mỗi sáng</p>
+    <p id="nfd"></p>
+    <p id="shy">app&shy;le soft</p>
+    <p id="nbsp">ice&nbsp;cream here</p>
+    <noscript>apple noscript</noscript>
+    <template id="tpl"><p>apple in template</p></template>
+    <script>
+      document.getElementById('nfd').textContent = 'Uống cà phê (NFD)'.normalize('NFD');
+    </script>
+  </body>
+</html>

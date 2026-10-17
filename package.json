@@ -1,0 +1,24 @@
+{
+  "name": "vivaldi-word-replacer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Personal Vivaldi/Chromium MV3 extension that replaces configured words on every web page.",
+  "license": "UNLICENSED",
+  "scripts": {
+    "test": "node --test \"test/unit/*.test.js\"",
+    "test:e2e": "node --test --test-concurrency=1 \"test/e2e/*.test.js\"",
+    "test:all": "npm test && npm run test:e2e",
+    "test:vivaldi": "node test/smoke/vivaldi-smoke.js",
+    "icons": "node scripts/make-icons.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "lit": "^3.3.3",
+    "playwright": "^1.64.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  }
+}

@@ -1,0 +1,43 @@
+<!doctype html>
+<!-- smoke.html — Real-browser smoke test page: checks the main behaviours and POSTs the results to /report. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Apple smoke – Banana</title>
+  </head>
+  <body>
+    <h1 id="h1">Apple check</h1>
+    <p id="p">Banana apple APPLES</p>
+    <div id="ce" contenteditable="true">apple editor</div>
+    <input id="ph" placeholder="apple here" />
+    <div id="host"></div>
+    <iframe id="frame" srcdoc="<p id='f'>apple in frame</p>"></iframe>
+    <script>
+      const root = document.getElementById('host').attachShadow({ mode: 'closed' });
+      root.innerHTML = '<p>apple in closed shadow</p>';
+      setTimeout(() => {
+        const p = document.createElement('p');
+        p.id = 'dyn';
+        p.textContent = 'dynamic apple';
+        document.body.append(p);
+      }, 300);
+      window.addEventListener('load', () =>
+        setTimeout(() => {
+          const $ = (id) => document.getElementById(id);
+          const frameDoc = $('frame').contentDocument;
+          const report = {
+            h1: $('h1').textContent,
+            p: $('p').textContent,
+            title: document.title,
+            editor: $('ce').textContent,
+            placeholder: $('ph').placeholder,
+            closedShadow: root.textContent,
+            iframe: frameDoc ? frameDoc.body.textContent : null,
+            dynamic: $('dyn') ? $('dyn').textContent : null,
+          };
+          fetch('/report', { method: 'POST', body: JSON.stringify(report) });
+        }, 1500)
+      );
+    </script>
+  </body>
+</html>

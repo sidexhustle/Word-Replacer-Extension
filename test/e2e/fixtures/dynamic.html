@@ -1,0 +1,40 @@
+<!doctype html>
+<!-- dynamic.html — E2E fixture: content added/changed after load, title changes, bulk insertion timing. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Dynamic</title>
+  </head>
+  <body>
+    <p id="later"></p>
+    <p id="data">nothing yet</p>
+    <div id="list"></div>
+    <span id="attr" title="none">attr</span>
+    <div id="bulk"></div>
+    <script>
+      setTimeout(() => {
+        document.getElementById('later').textContent = 'Added apple later';
+        document.getElementById('data').firstChild.data = 'changed to apple';
+        document.getElementById('list').innerHTML = '<ul><li id="li1">apple A</li><li id="li2">banana B</li></ul>';
+        document.getElementById('attr').setAttribute('title', 'apple tooltip');
+        document.title = 'New apple title';
+        window.__dynDone = true;
+      }, 300);
+
+      /** Appends n rows in one go; resolves with the ms until the browser is idle again. */
+      window.addBulk = (n) =>
+        new Promise((resolve) => {
+          const t0 = performance.now();
+          const frag = document.createDocumentFragment();
+          for (let i = 0; i < n; i++) {
+            const d = document.createElement('div');
+            d.textContent = `item ${i} apple banana`;
+            d.title = `row ${i} apple`;
+            frag.appendChild(d);
+          }
+          document.getElementById('bulk').appendChild(frag);
+          setTimeout(() => resolve(performance.now() - t0), 0);
+        });
+    </script>
+  </body>
+</html>

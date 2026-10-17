@@ -1,0 +1,23 @@
+<!doctype html>
+<!-- editor.html — E2E fixture: rich-text editors (contenteditable, designMode) must never be modified. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Editor</title>
+  </head>
+  <body>
+    <p id="outside">apple outside</p>
+    <div id="ed" contenteditable="true"><p id="ed-p">apple inside editor</p></div>
+    <iframe id="dm"></iframe>
+    <script>
+      const doc = document.getElementById('dm').contentDocument;
+      doc.designMode = 'on';
+      doc.body.innerHTML = '<p>apple design mode</p>';
+      setTimeout(() => {
+        document.getElementById('ed-p').append(' added apple');
+        doc.body.insertAdjacentHTML('beforeend', '<p>more apple</p>');
+        window.__editDone = true;
+      }, 200);
+    </script>
+  </body>
+</html>

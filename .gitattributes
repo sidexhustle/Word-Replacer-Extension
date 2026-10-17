@@ -1,0 +1,4 @@
+# Windows scripts need CRLF; the Ubuntu script needs LF (also inside GitHub "Download ZIP").
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+*.sh text eol=lf

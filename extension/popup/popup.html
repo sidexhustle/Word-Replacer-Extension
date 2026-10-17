@@ -1,0 +1,35 @@
+<!doctype html>
+<!-- popup.html — Toolbar popup: global on/off, per-site on/off, live count, link to options. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Word Replacer</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header>
+      <img src="../icons/icon32.png" alt="" width="20" height="20" />
+      <h1>Word Replacer</h1>
+    </header>
+
+    <label class="row">
+      <span>Enabled everywhere</span>
+      <input type="checkbox" id="enabled" class="switch" />
+    </label>
+
+    <label class="row" id="siteRow">
+      <span id="siteLabel">Active on this site</span>
+      <input type="checkbox" id="siteActive" class="switch" />
+    </label>
+    <p id="siteNote" class="muted" hidden></p>
+
+    <p id="count" class="count"></p>
+    <p id="rulesInfo" class="muted"></p>
+
+    <button id="openOptions" type="button">Manage rules…</button>
+
+    <script src="../src/shared/engine.js"></script>
+    <script src="../src/shared/settings.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>

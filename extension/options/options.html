@@ -1,0 +1,150 @@
+<!doctype html>
+<!-- options.html — Options page: rules table, where to replace, disabled sites, import/export. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Word Replacer – Options</title>
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <header class="top">
+      <img src="../icons/icon48.png" alt="" width="32" height="32" />
+      <h1>Word Replacer</h1>
+      <label class="global">
+        <input type="checkbox" id="enabled" class="switch" />
+        <span>Enabled</span>
+      </label>
+      <span id="status" class="status" aria-live="polite"></span>
+    </header>
+
+    <div id="bundledError" class="banner error" role="alert" hidden></div>
+
+    <div id="bundledBanner" class="banner" hidden>
+      <span>The words file <strong>rules.json</strong> in the extension folder has new content.
+        Use it?</span>
+      <span class="actions">
+        <button type="button" data-bundled="merge">Merge into my rules</button>
+        <button type="button" data-bundled="replace">Replace my rules</button>
+        <button type="button" data-bundled="ignore" class="link">Ignore</button>
+      </span>
+    </div>
+
+    <section>
+      <div class="section-head">
+        <h2>Rules</h2>
+        <input type="search" id="filter" placeholder="Filter rules…" aria-label="Filter rules" />
+        <button type="button" id="addRule" class="primary">+ Add rule</button>
+      </div>
+      <p class="hint">
+        Matching ignores case; the replacement is shown exactly as typed. <b>Anywhere</b> (default):
+        also inside other words. <b>Word + endings</b>: only where a word starts. <b>Whole word</b>:
+        only the exact word. Longer rules win when rules overlap. The example rules are switched off:
+        tick one to try it, or delete them.
+      </p>
+      <table id="rulesTable">
+        <thead>
+          <tr>
+            <th class="col-on">On</th>
+            <th>Find</th>
+            <th>Replace with</th>
+            <th class="col-match">Match</th>
+            <th class="col-del"><span class="sr-only">Delete</span></th>
+          </tr>
+        </thead>
+        <tbody id="rules"></tbody>
+      </table>
+      <p id="rulesEmpty" class="empty" hidden>No rules yet — click “+ Add rule”.</p>
+      <p id="rulesSummary" class="hint"></p>
+
+      <details id="compare" class="compare" open>
+        <summary>See the difference between the match modes</summary>
+        <div class="inline">
+          <input type="text" id="cmpFrom" value="color" aria-label="Example: find" />
+          <span aria-hidden="true">→</span>
+          <input type="text" id="cmpTo" value="colour" aria-label="Example: replace with" />
+        </div>
+        <input type="text" id="cmpText" value="color, Colors, watercolor, Colorado" aria-label="Example text" />
+        <table class="compare-table">
+          <tr><th>Anywhere</th><td id="cmpAnywhere"></td></tr>
+          <tr><th>Word + endings</th><td id="cmpWordStart"></td></tr>
+          <tr><th>Whole word</th><td id="cmpWholeWord"></td></tr>
+        </table>
+      </details>
+    </section>
+
+    <section>
+      <h2>Where to replace</h2>
+      <div class="checks">
+        <label><input type="checkbox" checked disabled /> Visible page text (always)</label>
+        <label><input type="checkbox" data-surface="title" /> Tab / page title</label>
+        <label><input type="checkbox" data-surface="tooltips" /> Hover tooltips</label>
+        <label><input type="checkbox" data-surface="placeholders" /> Grey hint text in input boxes</label>
+        <label><input type="checkbox" data-surface="buttonLabels" /> Button labels</label>
+        <label><input type="checkbox" data-surface="altText" /> Image alt text</label>
+      </div>
+      <p class="hint">
+        Never changed: text you type in inputs/text areas, rich-text editors (Gmail compose, Notion,
+        Jira…), scripts and styles — so nothing you write or save is altered.
+      </p>
+    </section>
+
+    <section>
+      <h2>Disabled sites</h2>
+      <form id="siteForm" class="inline">
+        <input type="text" id="siteInput" placeholder="example.com (also covers its subdomains)" aria-label="Site to disable" />
+        <button type="submit">Disable on site</button>
+      </form>
+      <ul id="sites" class="sites"></ul>
+      <p id="sitesEmpty" class="hint" hidden>Works on every website.</p>
+      <p class="hint">
+        A site added here is skipped together with its sub-sites (<code>example.com</code> also
+        covers <code>www.example.com</code>). Quicker ways to switch a site off or on: the
+        <b>⇄</b> toolbar button (<i>Active on …</i>), or right-click any page →
+        <i>Word Replacer: turn off/on for this site</i>.
+      </p>
+    </section>
+
+    <section>
+      <h2>Backup &amp; other computers</h2>
+      <p class="hint">
+        Each computer keeps its own list of words. To copy them: click <b>Export</b> here, then
+        <b>Import file…</b> on the other computer. Tip: put the exported file into the extension
+        folder as <code>rules.json</code>, and new installs will start with these words.
+      </p>
+      <div class="inline">
+        <button type="button" id="exportBtn">Export rules (.json)</button>
+        <label class="file-btn">
+          <input type="file" id="importFile" accept=".json,application/json" />
+          <span>Import file…</span>
+        </label>
+        <button type="button" id="loadBundled">Load rules.json from extension folder</button>
+        <select id="importMode" aria-label="Import mode">
+          <option value="merge">Merge with my rules</option>
+          <option value="replace">Replace my rules</option>
+        </select>
+      </div>
+      <p id="importResult" class="hint" aria-live="polite"></p>
+    </section>
+
+    <template id="ruleRow">
+      <tr>
+        <td class="col-on"><input type="checkbox" class="r-enabled" aria-label="Rule enabled" /></td>
+        <td><input type="text" class="r-from" placeholder="word or phrase" aria-label="Find" /></td>
+        <td><input type="text" class="r-to" placeholder="replacement" aria-label="Replace with" /></td>
+        <td class="col-match">
+          <select class="r-match" aria-label="Match mode">
+            <option value="anywhere">Anywhere</option>
+            <option value="wordStart">Word + endings</option>
+            <option value="wholeWord">Whole word</option>
+          </select>
+        </td>
+        <td class="col-del"><button type="button" class="r-delete" title="Delete rule" aria-label="Delete rule">✕</button></td>
+      </tr>
+    </template>
+
+    <script src="../src/shared/engine.js"></script>
+    <script src="../src/shared/settings.js"></script>
+    <script src="options.js"></script>
+  </body>
+</html>

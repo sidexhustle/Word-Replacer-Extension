@@ -1,0 +1,72 @@
+<!doctype html>
+<!-- shadow.html — E2E fixture: open/closed/declarative/late-upgraded/nested shadow roots and a Lit component. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Shadow</title>
+  </head>
+  <body>
+    <div id="open-host"></div>
+    <div id="closed-host"></div>
+    <div id="dsd-host"><template shadowrootmode="open"><p id="dsd-p">apple in declarative open</p></template></div>
+    <div id="dsd-closed-host"><template shadowrootmode="closed"><p>apple in declarative closed</p></template></div>
+    <late-el id="late"></late-el>
+    <nested-el id="nested"></nested-el>
+    <lit-greeting id="lit"></lit-greeting>
+    <script>
+      const open = document.getElementById('open-host').attachShadow({ mode: 'open' });
+      open.innerHTML = '<p>apple in open shadow</p>';
+      const closed = document.getElementById('closed-host').attachShadow({ mode: 'closed' });
+      closed.innerHTML = '<p>apple in closed shadow</p>';
+      window.__closed = closed;
+
+      // Closed root attached while the host is not in the document yet; inserted later.
+      const detached = document.createElement('div');
+      const detachedRoot = detached.attachShadow({ mode: 'closed' });
+      detachedRoot.innerHTML = '<p>apple in detached closed</p>';
+      window.__detached = detachedRoot;
+      setTimeout(() => document.body.appendChild(detached), 100);
+
+      // Defined after the element is already in the document: upgrade attaches a closed root later.
+      setTimeout(() => {
+        customElements.define(
+          'late-el',
+          class extends HTMLElement {
+            constructor() {
+              super();
+              const r = this.attachShadow({ mode: 'closed' });
+              window.__late = r;
+              r.innerHTML = '<span>apple in late closed</span>';
+              setTimeout(() => (r.querySelector('span').textContent = 'updated apple late'), 150);
+            }
+          }
+        );
+      }, 200);
+
+      customElements.define(
+        'nested-el',
+        class extends HTMLElement {
+          constructor() {
+            super();
+            const r = this.attachShadow({ mode: 'closed' });
+            window.__nestedOuter = r;
+            r.innerHTML = '<div><inner-el></inner-el></div>';
+          }
+        }
+      );
+      customElements.define(
+        'inner-el',
+        class extends HTMLElement {
+          connectedCallback() {
+            if (this.__done) return;
+            this.__done = true;
+            const r = this.attachShadow({ mode: 'closed' });
+            window.__nestedInner = r;
+            r.innerHTML = '<b>apple nested inner</b>';
+          }
+        }
+      );
+    </script>
+    <script src="/.build/lit-app.js"></script>
+  </body>
+</html>

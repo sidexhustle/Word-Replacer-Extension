@@ -1,0 +1,9 @@
+{
+  "format": "vivaldi-word-replacer",
+  "version": 1,
+  "rules": [
+    { "from": "color", "to": "colour", "match": "anywhere", "enabled": false },
+    { "from": "organize", "to": "organise", "match": "wordStart", "enabled": false },
+    { "from": "gray", "to": "grey", "match": "wholeWord", "enabled": false }
+  ]
+}

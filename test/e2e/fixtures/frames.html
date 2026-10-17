@@ -1,0 +1,23 @@
+<!doctype html>
+<!-- frames.html — E2E fixture: same-origin, srcdoc, script-written about:blank, blob: and cross-origin iframes. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Frames</title>
+  </head>
+  <body>
+    <p id="top">apple top</p>
+    <iframe id="same" src="/child.html"></iframe>
+    <iframe id="srcdoc" srcdoc="<p id='s'>apple srcdoc</p>"></iframe>
+    <iframe id="blank"></iframe>
+    <iframe id="blob"></iframe>
+    <iframe id="cross"></iframe>
+    <script>
+      document.getElementById('blank').contentDocument.body.innerHTML = '<p id="b">apple blank</p>';
+      const blob = new Blob(['<p id="bl">apple blob</p>'], { type: 'text/html' });
+      document.getElementById('blob').src = URL.createObjectURL(blob);
+      const port = new URLSearchParams(location.search).get('b');
+      document.getElementById('cross').src = `http://localhost:${port}/child.html`;
+    </script>
+  </body>
+</html>

@@ -1,0 +1,69 @@
+{
+  "manifest_version": 3,
+  "name": "Word Replacer (personal)",
+  "short_name": "Word Replacer",
+  "version": "1.0.0",
+  "description": "Shows your own replacement words on every web page (case-insensitive). Personal use.",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAktqx+/Du8Qfv6245d/H7S8Y23Y1V6CTKfl50oKWrgWauo10tliOfLvIYDAygFAJ7/LXJZU70MWbzeblPnfyHwyyRTdsJnGy47bmn8I6pMx418APX/p9o9wthAu4h3T1xXw6DGNAAtQL735flukLYrFde7mCEmc/+gEiWT0boH2hOXpZRlDUMAulw9kRPt10T5KHuj7kd2GOH9b/sV8uHMUd8DZnnc64oj81Mvbs5y07E6mNXYM95MIxnTIpjTeCj2FhNqJCD1LRYCLwGCgiOiHFDzTUobr4XotneRC+yax3/yWa3IlqkPsVj+WukpJNPHBjLpkFwps6azTk+9ag0bQIDAQAB",
+  "minimum_chrome_version": "111",
+  "permissions": [
+    "storage",
+    "scripting",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true,
+      "match_origin_as_fallback": true,
+      "js": [
+        "src/shadow-hook.js"
+      ],
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true,
+      "match_origin_as_fallback": true,
+      "js": [
+        "src/shared/engine.js",
+        "src/shared/settings.js",
+        "src/content.js"
+      ]
+    }
+  ],
+  "action": {
+    "default_title": "Word Replacer",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

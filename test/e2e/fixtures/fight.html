@@ -1,0 +1,22 @@
+<!doctype html>
+<!-- fight.html — E2E fixture: a hostile script that resets text immediately (ping-pong) + a growth check. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Fight</title>
+  </head>
+  <body>
+    <p id="grow">cat</p>
+    <p id="fight">cat</p>
+    <script>
+      const p = document.getElementById('fight');
+      window.__resets = 0;
+      new MutationObserver(() => {
+        if (p.textContent !== 'cat') {
+          window.__resets++;
+          p.textContent = 'cat';
+        }
+      }).observe(p, { subtree: true, characterData: true, childList: true });
+    </script>
+  </body>
+</html>
